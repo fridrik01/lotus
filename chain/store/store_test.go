@@ -213,7 +213,7 @@ func TestChainExportImportFull(t *testing.T) {
 		t.Fatal("imported chain differed from exported chain")
 	}
 
-	sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), nil, filcns.DefaultUpgradeSchedule(), cg.BeaconSchedule())
+	sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), nil, filcns.DefaultUpgradeSchedule(), cg.BeaconSchedule(), datastore.NewMapDatastore())
 	if err != nil {
 		t.Fatal(err)
 	}

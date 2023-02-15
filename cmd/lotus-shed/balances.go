@@ -15,6 +15,7 @@ import (
 
 	"github.com/docker/go-units"
 	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
@@ -514,7 +515,7 @@ var chainBalanceStateCmd = &cli.Command{
 		cst := cbor.NewCborStore(bs)
 		store := adt.WrapStore(ctx, cst)
 
-		sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil)
+		sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil, datastore.NewMapDatastore())
 		if err != nil {
 			return err
 		}
@@ -739,7 +740,7 @@ var chainPledgeCmd = &cli.Command{
 		cst := cbor.NewCborStore(bs)
 		store := adt.WrapStore(ctx, cst)
 
-		sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil)
+		sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil, datastore.NewMapDatastore())
 		if err != nil {
 			return err
 		}

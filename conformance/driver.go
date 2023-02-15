@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	ds "github.com/ipfs/go-datastore"
 	cbor "github.com/ipfs/go-ipld-cbor"
 
@@ -108,7 +109,7 @@ func (d *Driver) ExecuteTipset(bs blockstore.Blockstore, ds ds.Batching, params 
 
 		cs      = store.NewChainStore(bs, bs, ds, filcns.Weight, nil)
 		tse     = consensus.NewTipSetExecutor(filcns.RewardFunc)
-		sm, err = stmgr.NewStateManager(cs, tse, syscalls, filcns.DefaultUpgradeSchedule(), nil)
+		sm, err = stmgr.NewStateManager(cs, tse, syscalls, filcns.DefaultUpgradeSchedule(), nil, datastore.NewMapDatastore())
 	)
 	if err != nil {
 		return nil, err

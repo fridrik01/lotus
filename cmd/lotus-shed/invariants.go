@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/xerrors"
 
@@ -91,7 +92,7 @@ var invariantsCmd = &cli.Command{
 		cs := store.NewChainStore(bs, bs, mds, filcns.Weight, nil)
 		defer cs.Close() //nolint:errcheck
 
-		sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil)
+		sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil, datastore.NewMapDatastore())
 		if err != nil {
 			return err
 		}

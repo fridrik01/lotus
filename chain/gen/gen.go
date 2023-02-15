@@ -12,6 +12,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	format "github.com/ipfs/go-ipld-format"
 	logging "github.com/ipfs/go-log/v2"
@@ -256,7 +257,7 @@ func NewGeneratorWithSectorsAndUpgradeSchedule(numSectors int, us stmgr.UpgradeS
 	//return nil, xerrors.Errorf("creating drand beacon: %w", err)
 	//}
 
-	sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), sys, us, beac)
+	sm, err := stmgr.NewStateManager(cs, consensus.NewTipSetExecutor(filcns.RewardFunc), sys, us, beac, datastore.NewMapDatastore())
 	if err != nil {
 		return nil, xerrors.Errorf("initing stmgr: %w", err)
 	}

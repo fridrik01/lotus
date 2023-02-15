@@ -17,6 +17,7 @@ import (
 	"strings"
 
 	"github.com/DataDog/zstd"
+	"github.com/ipfs/go-datastore"
 	metricsprom "github.com/ipfs/go-metrics-prometheus"
 	"github.com/mitchellh/go-homedir"
 	"github.com/multiformats/go-multiaddr"
@@ -540,7 +541,7 @@ func ImportChain(ctx context.Context, r repo.Repo, fname string, snapshot bool) 
 	}
 
 	// TODO: We need to supply the actual beacon after v14
-	stm, err := stmgr.NewStateManager(cst, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil)
+	stm, err := stmgr.NewStateManager(cst, consensus.NewTipSetExecutor(filcns.RewardFunc), vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil, datastore.NewMapDatastore())
 	if err != nil {
 		return err
 	}

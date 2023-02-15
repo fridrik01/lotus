@@ -12,6 +12,7 @@ import (
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/ipfs/go-blockservice"
 	"github.com/ipfs/go-cid"
+	"github.com/ipfs/go-datastore"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	format "github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/go-merkledag"
@@ -308,7 +309,7 @@ to reduce the number of decode operations performed by caching the decoded objec
 		}
 
 		tsExec := consensus.NewTipSetExecutor(filcns.RewardFunc)
-		sm, err := stmgr.NewStateManager(cs, tsExec, vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil)
+		sm, err := stmgr.NewStateManager(cs, tsExec, vm.Syscalls(ffiwrapper.ProofVerifier), filcns.DefaultUpgradeSchedule(), nil, datastore.NewMapDatastore())
 		if err != nil {
 			return err
 		}
